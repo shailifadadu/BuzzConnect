@@ -3,7 +3,6 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { LogOut } from "lucide-react";
 
 //1st arg -> callback fun which return obj
 export const useAuthStore = create((set) => ({
@@ -14,6 +13,7 @@ export const useAuthStore = create((set) => ({
   isUpdatingProfile: false,
   //whenever we refresh our page, we willcheck whether user is authenticated or not
   isCheckingAuth: true,
+  onlineUsers: [],
 
   checkAuth: async () => {
     try {
