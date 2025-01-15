@@ -7,6 +7,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./lib/socket.js";
 
+import path from "path";
+const _dirname = path.resolve();
+
 dotenv.config();
 //del this bcoz we have already create one in socket.js file
 //const app = express();
@@ -28,6 +31,13 @@ app.use("/api/auth", authRoutes);
 
 //messages route
 app.use("/api/messages", messageRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(_dirname, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(_dirname, "../frontent", "dist", "index.html"));
+  });
+}
 
 server.listen(PORT, () => {
   console.log("Server is running on PORT:" + PORT);
